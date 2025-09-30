@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enso Quiz</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(128,0,128,0.7), rgba(0,0,0,0.7));
+      background-size: cover;
+    }
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      width: 90%;
+      max-width: 600px;
+      color: #fff;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .options button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .options button.correct {
+      background: rgba(0, 255, 0, 0.6);
+    }
+    .options button.wrong {
+      background: rgba(255, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Enso Quiz</h1>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {q: "1. What is Enso.build mainly?", options: ["Onchain development platform", "E-commerce site", "Gaming portal", "Social media"], answer: "Onchain development platform"},
+      {q: "2. What is Enso’s tagline?", options: ["Blockchain Shortcuts", "Blockchain Made Easy", "Build Your Dreams", "Chain the Future"], answer: "Blockchain Shortcuts"},
+      {q: "3. In Enso, what are Actions?", options: ["Abstractions of smart contract transactions", "Video tasks", "Music playlists", "Image filters"], answer: "Abstractions of smart contract transactions"},
+      {q: "4. What do Shortcuts do?", options: ["Combine multiple Actions", "Delete contracts", "Play games", "Store images"], answer: "Combine multiple Actions"},
+      {q: "5. What is Enso’s mission?", options: ["Build onchain apps fast", "Make movies", "Build cars", "Social networking"], answer: "Build onchain apps fast"},
+      {q: "6. What is the role of a Grapher?", options: ["Plot the best solution path", "Draw pictures", "Mine tokens", "Design UI"], answer: "Plot the best solution path"},
+      {q: "7. What is the role of a Validator?", options: ["Verify solutions", "Approve ads", "Play music", "Count votes"], answer: "Verify solutions"},
+      {q: "8. What does Submit an Action mean on Enso?", options: ["Submit an onchain intent", "Upload a photo", "Add music", "Post a blog"], answer: "Submit an onchain intent"},
+      {q: "9. What is the role of Enso’s shared engine?", options: ["Process all onchain interactions", "Run games", "Store emails", "Upload images"], answer: "Process all onchain interactions"},
+      {q: "10. What does the Templates section provide?", options: ["App blueprints", "Wallpapers", "Fonts", "Logos"], answer: "App blueprints"},
+      {q: "11. How many developers are on Enso?", options: ["1900+", "500", "10,000", "100"], answer: "1900+"},
+      {q: "12. How many apps already use Enso?", options: ["100+", "10", "5", "1000"], answer: "100+"},
+      {q: "13. How many protocols are integrated into Enso?", options: ["250+", "50", "1000", "10"], answer: "250+"},
+      {q: "14. Every onchain interaction is mapped to _", options: ["A shared engine", "A private wallet", "Google server", "A phone"], answer: "A shared engine"},
+      {q: "15. What advantage does Enso give developers?", options: ["No manual smart contract integration", "Free movies", "Cheap hosting", "Free phones"], answer: "No manual smart contract integration"},
+      {q: "16. What can you do with the Actions Library?", options: ["Browse onchain functions", "Select music", "Choose colors", "Draw diagrams"], answer: "Browse onchain functions"},
+      {q: "17. Lend, Borrow, Swap, Mint NFT are types of what?", options: ["Actions", "Templates", "Blogs", "Ads"], answer: "Actions"},
+      {q: "18. Where are Gas price, Balance, and APY used in Enso?", options: ["Actions", "Gaming", "Email", "Social media"], answer: "Actions"},
+      {q: "19. Who performs Seek Optimal Solution?", options: ["Graphers", "Validators", "Users", "Bots"], answer: "Graphers"},
+      {q: "20. Who performs Validate Solution?", options: ["Validators", "Users", "Graphers", "Admins"], answer: "Validators"}
+    ];
+
+    const quizEl = document.getElementById("quiz");
+
+    quizData.forEach((item, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question-block";
+
+      const qText = document.createElement("div");
+      qText.className = "question";
+      qText.innerText = item.q;
+      qDiv.appendChild(qText);
+
+      const opts = document.createElement("div");
+      opts.className = "options";
+
+      // Shuffle options
+      const shuffled = item.options.sort(() => Math.random() - 0.5);
+
+      shuffled.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          if (opt === item.answer) {
+            btn.classList.add("correct");
+          } else {
+            btn.classList.add("wrong");
+            // highlight correct answer
+            Array.from(opts.children).forEach(b => {
+              if (b.innerText === item.answer) b.classList.add("correct");
+            });
+          }
+          Array.from(opts.children).forEach(b => b.disabled = true);
+        };
+        opts.appendChild(btn);
+      });
+
+      qDiv.appendChild(opts);
+      quizEl.appendChild(qDiv);
+    });
+  </script>
+</body>
+</html>
